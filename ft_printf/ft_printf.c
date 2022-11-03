@@ -6,7 +6,7 @@
 /*   By: donghyk2 <donghyk2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 13:37:13 by donghyk2          #+#    #+#             */
-/*   Updated: 2022/11/03 18:19:08 by donghyk2         ###   ########.fr       */
+/*   Updated: 2022/11/04 01:41:09 by donghyk2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,7 @@ int	print_ret_cnt(const char *s, va_list ap)
 int	ft_printf(const char *s, ...)
 {
 	va_list	ap;
-	int		cnt;
 
-	cnt = 0;
 	va_start(ap, s);
-	cnt == print_ret_cnt(s, ap);
-	return (cnt);
+	return (print_ret_cnt(s, ap));
 }
