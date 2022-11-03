@@ -6,13 +6,15 @@
 /*   By: donghyk2 <donghyk2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 13:37:13 by donghyk2          #+#    #+#             */
-/*   Updated: 2022/11/02 17:10:45 by donghyk2         ###   ########.fr       */
+/*   Updated: 2022/11/03 18:19:08 by donghyk2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "printf.h"
 
-int	print_ret_cnt(const char *s)
+
+
+int	print_ret_cnt(const char *s, va_list ap)
 {
 	int	cnt;
 	int	flag;
@@ -21,8 +23,18 @@ int	print_ret_cnt(const char *s)
 	flag = 0;
 	while (*s)
 	{
-		if (s)
-		
+		if (*s != '%' && !flag)
+		{
+			write (1, s, 1);
+			cnt++;
+		}
+		else if (*s == '%')
+			flag = 1;
+		else if (flag)
+		{
+			flag = 0;
+			va_arg(ap, type);
+		}
 		s++;
 	}
 	return (cnt);
@@ -35,6 +47,6 @@ int	ft_printf(const char *s, ...)
 
 	cnt = 0;
 	va_start(ap, s);
-	cnt == print_ret_cnt(s);
+	cnt == print_ret_cnt(s, ap);
 	return (cnt);
 }
