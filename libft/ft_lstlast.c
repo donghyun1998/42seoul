@@ -6,7 +6,7 @@
 /*   By: donghyk2 <donghyk2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 10:51:22 by donghyk2          #+#    #+#             */
-/*   Updated: 2022/10/29 14:10:33 by donghyk2         ###   ########.fr       */
+/*   Updated: 2022/11/09 21:31:11 by donghyk2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_list	*ft_lstlast(t_list *lst)
 {
 	if (!lst)
 		return (0);
-	while (!lst->next)
+	while (lst->next)
 		lst = lst->next;
 	return (lst);
 }
