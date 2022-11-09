@@ -6,7 +6,7 @@
 /*   By: donghyk2 <donghyk2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 17:30:52 by donghyk2          #+#    #+#             */
-/*   Updated: 2022/10/22 20:54:04 by donghyk2         ###   ########.fr       */
+/*   Updated: 2022/11/09 21:27:51 by donghyk2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*ft_strchr(const char *s, int c)
 			return ((char *)s);
 		s++;
 	}
-	if (*s == c)
+	if (*s == (char)c)
 		return ((char *)s);
 	return (0);
 }
