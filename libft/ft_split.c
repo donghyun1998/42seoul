@@ -6,24 +6,24 @@
 /*   By: donghyk2 <donghyk2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 17:13:54 by donghyk2          #+#    #+#             */
-/*   Updated: 2022/10/28 13:19:56 by donghyk2         ###   ########.fr       */
+/*   Updated: 2022/11/10 16:30:51 by donghyk2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static char	**allfree(char **res, int index)
+static char	**allfree(char **res, int outindex)
 {
 	int	i;
 
 	i = -1;
-	while (++i < index)
+	while (++i < outindex)
 		free(res[i]);
 	free(res);
 	return (0);
 }
 
-static int	biglen(char *s, char c)
+static int	wordnumber(char *s, char c)
 {
 	int	len;
 	int	i;
@@ -42,17 +42,17 @@ static int	biglen(char *s, char c)
 	return (len);
 }
 
-static int	smalllen(char *s, char c, int *j)
+static int	wordlen(char *s, char c, int *j)
 {
 	int	tmp;
 
 	tmp = *j;
 	while (s[*j] != c && s[*j])
 		(*j)++;
-	return (*j - tmp + 1);
+	return (*j - tmp);
 }
 
-static void	init(char **res, char *s, char c)
+static void	init(char **res, char *s, char c, int wordn)
 {
 	int	i;
 	int	j;
@@ -60,7 +60,7 @@ static void	init(char **res, char *s, char c)
 
 	i = 0;
 	j = 0;
-	if (biglen((char *)s, c) == 0)
+	if (wordn == 0)
 	{
 		res[j] = 0;
 		return ;
@@ -84,24 +84,26 @@ char	**ft_split(char const *s, char c)
 	char	**res;
 	int		i;
 	int		j;
+	int		wordn;
 
 	if (!s)
 		return (0);
-	res = (char **)malloc(sizeof(char *) * (biglen((char *)s, c) + 1));
+	wordn = wordnumber((char *)s, c);
+	res = (char **)malloc(sizeof(char *) * (wordn + 1));
 	if (!res)
 		return (0);
 	i = -1;
-	while (++i < biglen((char *)s, c))
+	j = 0;
+	while (++i < wordn)
 	{
-		if (biglen((char *)s, c) == 0)
+		if (wordn == 0)
 			break ;
-		j = 0;
 		while (s[j] == c && s[j])
 			j++;
-		res[i] = (char *)malloc(sizeof(char) * (smalllen((char *)s, c, &j)));
+		res[i] = (char *)malloc(sizeof(char) * (wordlen((char *)s, c, &j) + 1));
 		if (!res[i])
-			return (allfree(res, i));
+			return (allfree(res, i - 1));
 	}
-	init(res, (char *)s, c);
+	init(res, (char *)s, c, wordn);
 	return (res);
 }
