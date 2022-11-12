@@ -6,7 +6,7 @@
 /*   By: donghyk2 <donghyk2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 13:37:13 by donghyk2          #+#    #+#             */
-/*   Updated: 2022/11/04 01:46:49 by donghyk2         ###   ########.fr       */
+/*   Updated: 2022/11/12 20:20:06 by donghyk2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int	print_ret_cnt(const char *s, va_list ap)
 		{
 			flag = 0;
 			va_arg(ap, type);
+
 		}
 		s++;
 	}
