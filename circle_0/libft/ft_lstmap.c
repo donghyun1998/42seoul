@@ -6,7 +6,7 @@
 /*   By: donghyk2 <donghyk2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 16:03:24 by donghyk2          #+#    #+#             */
-/*   Updated: 2022/11/12 16:06:09 by donghyk2         ###   ########.fr       */
+/*   Updated: 2022/11/13 01:24:14 by donghyk2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,5 +37,6 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 		tmp = tmp->next;
 		lst = lst->next;
 	}
+	tmp->next = 0;
 	return (begin);
 }

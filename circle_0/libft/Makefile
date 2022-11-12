@@ -6,7 +6,7 @@
 #    By: donghyk2 <donghyk2@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/16 16:20:15 by donghyk2          #+#    #+#              #
-#    Updated: 2022/11/12 19:45:48 by donghyk2         ###   ########.fr        #
+#    Updated: 2022/11/13 01:28:32 by donghyk2         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,6 +39,7 @@ else
 endif
 
 all : $(NAME)
+	sleep 1
 
 $(NAME) : $(REALOBJS)
 	ar -rcs $@ $(REALOBJS)
