@@ -6,7 +6,7 @@
 #    By: donghyk2 <donghyk2@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/16 16:20:15 by donghyk2          #+#    #+#              #
-#    Updated: 2022/11/12 19:38:01 by donghyk2         ###   ########.fr        #
+#    Updated: 2022/11/12 19:45:48 by donghyk2         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,7 +47,7 @@ bonus :
 	make BONUS_ON=1
 
 %.o : %.c
-	$(CC) $(CFLAGS) -c $^ -o $@
+	$(CC) $(CFLAGS) -c $^ -o $@ -I $(HEADER)
 
 clean :
 	rm -f $(OBJS) $(OBJS_BONUS)
