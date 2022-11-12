@@ -6,7 +6,7 @@
 #    By: donghyk2 <donghyk2@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/16 16:20:15 by donghyk2          #+#    #+#              #
-#    Updated: 2022/10/26 17:28:06 by donghyk2         ###   ########.fr        #
+#    Updated: 2022/11/12 15:52:52 by donghyk2         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,8 @@ endif
 
 NAME        = libft.a
 
-all: $(NAME)
+all : $(NAME)
+	sleep 1
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@ -I $(HEADER)
