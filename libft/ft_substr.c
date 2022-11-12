@@ -6,7 +6,7 @@
 /*   By: donghyk2 <donghyk2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 15:23:42 by donghyk2          #+#    #+#             */
-/*   Updated: 2022/10/24 15:40:43 by donghyk2         ###   ########.fr       */
+/*   Updated: 2022/11/12 16:20:15 by donghyk2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 		return (0);
 	if (slen < start)
 		return (ft_strdup(""));
-	if (slen < len)
-		len = slen;
+	if (slen < start + len)
+		len = slen - start;
 	res = (char *)malloc(sizeof(char) * (len + 1));
 	if (!res)
 		return (0);

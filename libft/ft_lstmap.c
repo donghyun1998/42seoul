@@ -6,7 +6,7 @@
 /*   By: donghyk2 <donghyk2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 16:03:24 by donghyk2          #+#    #+#             */
-/*   Updated: 2022/11/12 15:58:32 by donghyk2         ###   ########.fr       */
+/*   Updated: 2022/11/12 16:06:09 by donghyk2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,12 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 	t_list	*tmp;
 	t_list	*begin;
 
-	res = ft_lstnew(f(lst->content));
-	if (!lst || !f || !res)
+	if (!lst || !f)
 		return (0);
+	res = ft_lstnew(f(lst->content));
+	if (!res)
+		return (0);
+	lst = lst->next;
 	begin = res;
 	tmp = res;
 	while (lst)
@@ -34,6 +37,5 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 		tmp = tmp->next;
 		lst = lst->next;
 	}
-	res = begin;
-	return (res);
+	return (begin);
 }
