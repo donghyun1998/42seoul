@@ -6,7 +6,7 @@
 #    By: donghyk2 <donghyk2@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/16 16:20:15 by donghyk2          #+#    #+#              #
-#    Updated: 2022/11/12 15:52:52 by donghyk2         ###   ########.fr        #
+#    Updated: 2022/11/12 19:38:01 by donghyk2         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ CC          = cc
 
 CFLAGS      = -Wall -Wextra -Werror
 
-HEADER      = libft.h
+NAME        = libft.a
 
 SRCS        = ft_isalpha.c ft_isdigit.c ft_isalnum.c ft_isascii.c ft_isprint.c ft_strlen.c \
 			  ft_memset.c ft_bzero.c ft_memcpy.c ft_memmove.c ft_strlcpy.c ft_strlcat.c \
@@ -26,38 +26,36 @@ SRCS        = ft_isalpha.c ft_isdigit.c ft_isalnum.c ft_isascii.c ft_isprint.c f
 BONUS       = ft_lstnew.c ft_lstadd_front.c ft_lstsize.c ft_lstlast.c \
               ft_lstadd_back.c ft_lstdelone.c ft_lstclear.c ft_lstiter.c ft_lstmap.c
 
-OBJS        = $(SRCS:c=o)
+OBJS= $(SRCS:.c=.o)
 
-OBJS_BONUS  = $(BONUS:c=o)
+OBJS_BONUS= $(BONUS:.c=.o)
 
-ifdef BONUSFLAG
-    ALLOBJ  = $(OBJS) $(OBJS_BONUS)
+HEADER= libft.h
+
+ifdef BONUS_ON
+    REALOBJS = $(OBJS) $(OBJS_BONUS)
 else
-    ALLOBJ  = $(OBJS)
+    REALOBJS = $(OBJS)
 endif
 
-NAME        = libft.a
-
 all : $(NAME)
-	sleep 1
 
-%.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@ -I $(HEADER)
+$(NAME) : $(REALOBJS)
+	ar -rcs $@ $(REALOBJS)
 
-$(NAME): $(ALLOBJ)
-	ar rcs $@ $(ALLOBJ)
+bonus :
+	make BONUS_ON=1
 
-bonus:
-	make BONUSFLAG=1
+%.o : %.c
+	$(CC) $(CFLAGS) -c $^ -o $@
 
-clean:
-	rm -rf $(OBJS) $(OBJS_BONUS)
+clean :
+	rm -f $(OBJS) $(OBJS_BONUS)
 
-fclean: clean
+fclean : clean
 	rm -f $(NAME)
 
-re:
-	make fclean
-	make all
+re : make fclean
+	 make all
 
-.PHONY: all bonus clean fclean re
+.PHONY: all re fclean clean bonus
