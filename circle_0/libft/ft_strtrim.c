@@ -6,7 +6,7 @@
 /*   By: donghyk2 <donghyk2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 15:35:16 by donghyk2          #+#    #+#             */
-/*   Updated: 2022/10/24 17:32:48 by donghyk2         ###   ########.fr       */
+/*   Updated: 2022/11/14 16:37:58 by donghyk2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	*ft_strtrim(char const *s1, char const *set)
 	while (ft_strchr(set, s1[start]) && s1[start])
 		start++;
 	end = ft_strlen(s1);
-	while (end && s1[end - 1] && ft_strchr(set, s1[end - 1]))
+	while (end && ft_strchr(set, s1[end - 1]))
 		end--;
 	if (start > end)
 		return (ft_strdup(""));

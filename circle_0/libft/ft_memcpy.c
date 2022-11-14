@@ -6,13 +6,13 @@
 /*   By: donghyk2 <donghyk2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 16:02:47 by donghyk2          #+#    #+#             */
-/*   Updated: 2022/10/24 17:09:40 by donghyk2         ###   ########.fr       */
+/*   Updated: 2022/11/14 16:44:37 by donghyk2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_memcpy(void *restrict dst, const void *restrict src, size_t n)
+void	*ft_memcpy(void *dst, const void *src, size_t n)
 {
 	unsigned char	*pdst;
 	unsigned char	*psrc;

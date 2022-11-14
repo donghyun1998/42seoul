@@ -6,7 +6,7 @@
 /*   By: donghyk2 <donghyk2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 16:03:24 by donghyk2          #+#    #+#             */
-/*   Updated: 2022/11/13 01:24:14 by donghyk2         ###   ########.fr       */
+/*   Updated: 2022/11/14 16:33:45 by donghyk2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 	t_list	*tmp;
 	t_list	*begin;
 
-	if (!lst || !f)
+	if (!lst || !f || !del)
 		return (0);
 	res = ft_lstnew(f(lst->content));
 	if (!res)
