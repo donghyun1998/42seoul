@@ -6,13 +6,29 @@
 /*   By: donghyk2 <donghyk2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 13:37:13 by donghyk2          #+#    #+#             */
-/*   Updated: 2022/11/12 20:20:06 by donghyk2         ###   ########.fr       */
+/*   Updated: 2022/11/14 21:29:16 by donghyk2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "printf.h"
+#include "libft/libft.h"
 
-int	print_ret_cnt(const char *s, va_list ap)
+int print_arg_ret_cnt(va_list ap, const char *c)
+{
+	int cnt;
+
+	cnt = 0;
+	if (*c == 'c')
+		cnt = form_c(va_arg(ap, char));
+	else if (*c == 's')
+		cnt = form_s(va_arg(ap, char*));
+	else if (*c == 'd')
+		cnt = form_d(va_arg(ap, char*));
+
+	return (cnt);
+}
+
+int	print_body_ret_cnt(const char *s, va_list ap)
 {
 	int	cnt;
 	int	flag;
@@ -21,7 +37,7 @@ int	print_ret_cnt(const char *s, va_list ap)
 	flag = 0;
 	while (*s)
 	{
-		if (*s != '%' && !flag)
+		if (*s != '%')
 		{
 			write (1, s, 1);
 			cnt++;
@@ -31,8 +47,7 @@ int	print_ret_cnt(const char *s, va_list ap)
 		else if (flag)
 		{
 			flag = 0;
-			va_arg(ap, type);
-
+			cnt += print_arg_ret_cnt(ap, s);
 		}
 		s++;
 	}
@@ -44,9 +59,11 @@ int	ft_printf(const char *s, ...)
 	va_list	ap;
 	int		cnt;
 
+	if (!*s)
+		return (-1);
 	cnt = 0;
 	va_start(ap, s);
-	cnt == print_ret_cnt(s, ap);
+	cnt == print_body_ret_cnt(s, ap);
 	va_end(ap);
 	return (cnt);
 }
