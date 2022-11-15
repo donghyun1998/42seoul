@@ -6,49 +6,54 @@
 /*   By: donghyk2 <donghyk2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 13:37:13 by donghyk2          #+#    #+#             */
-/*   Updated: 2022/11/14 21:29:16 by donghyk2         ###   ########.fr       */
+/*   Updated: 2022/11/15 21:36:40 by donghyk2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "printf.h"
 #include "libft/libft.h"
 
-int print_arg_ret_cnt(va_list ap, const char *c)
+int print_arg_ret_cnt(va_list ap, const char form)
 {
-	int cnt;
-
-	cnt = 0;
-	if (*c == 'c')
-		cnt = form_c(va_arg(ap, char));
-	else if (*c == 's')
-		cnt = form_s(va_arg(ap, char*));
-	else if (*c == 'd')
-		cnt = form_d(va_arg(ap, char*));
-
-	return (cnt);
+	if (form == 'c')
+		return(form_c(va_arg(ap, char)));
+	else if (form == 's')
+		return(form_s(va_arg(ap, char *)));
+	else if (form == 'p')
+		return(form_p(va_arg(ap, ??)));
+	else if (form == 'd')
+		return(form_d(va_arg(ap, char *)));
+	return (-1);
 }
 
-int	print_body_ret_cnt(const char *s, va_list ap)
+int	is_form(const char *s)
+{
+	if (*s == 'c' || *s == 's' || *s == 'p'
+		|| *s == 'd' || *s == 'i' || *s == 'u'
+		|| *s == 'x' || *s == 'X' || *s == '%')
+		return (1);
+	return (0);
+}
+
+int	print_body_ret_cnt(va_list ap, const char *s)
 {
 	int	cnt;
-	int	flag;
+	int	check;
 
 	cnt = 0;
-	flag = 0;
 	while (*s)
 	{
+		check = 0;
 		if (*s != '%')
+			check = write(1, s, 1);
+		else
 		{
-			write (1, s, 1);
-			cnt++;
+			if (is_form(++s))
+				check = print_arg_ret_cnt(ap, *s);
 		}
-		else if (*s == '%')
-			flag = 1;
-		else if (flag)
-		{
-			flag = 0;
-			cnt += print_arg_ret_cnt(ap, s);
-		}
+		if (check < 0)
+			return (-1);
+		cnt += check;
 		s++;
 	}
 	return (cnt);
@@ -63,7 +68,7 @@ int	ft_printf(const char *s, ...)
 		return (-1);
 	cnt = 0;
 	va_start(ap, s);
-	cnt == print_body_ret_cnt(s, ap);
+	cnt == print_body_ret_cnt(ap, s);
 	va_end(ap);
 	return (cnt);
 }
