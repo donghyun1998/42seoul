@@ -6,7 +6,7 @@
 /*   By: donghyk2 <donghyk2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 17:13:54 by donghyk2          #+#    #+#             */
-/*   Updated: 2022/11/16 22:11:56 by donghyk2         ###   ########.fr       */
+/*   Updated: 2022/11/17 13:01:39 by donghyk2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static char	**allfree(char **res, int outindex)
 	int	i;
 
 	i = -1;
-	while (++i < outindex)
+	while (++i <= outindex)
 	{
 		free(res[i]);
 		res[i] = 0;
