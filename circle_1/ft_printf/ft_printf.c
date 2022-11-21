@@ -6,12 +6,11 @@
 /*   By: donghyk2 <donghyk2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 13:37:13 by donghyk2          #+#    #+#             */
-/*   Updated: 2022/11/18 19:51:55 by donghyk2         ###   ########.fr       */
+/*   Updated: 2022/11/21 21:04:24 by donghyk2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#include "libft/libft.h"
 
 int print_va_arg(va_list ap, const char form)
 {
@@ -20,9 +19,12 @@ int print_va_arg(va_list ap, const char form)
 	else if (form == 's')
 		return(form_s(va_arg(ap, char *)));
 	else if (form == 'p')
-		return(form_p(va_arg(ap, unsigned long long)));
+		return(form_p(va_arg(ap, long long)));
 	else if (form == 'd' || form == 'i')
-		return(form_di(va_arg(ap, char *)));
+		return(form_diu(va_arg(ap, int)));
+	else if (form == 'u')
+		return(form_diu(va_arg(ap, unsigned int)));
+	else if (unsigned int)
 	return (-1);
 }
 

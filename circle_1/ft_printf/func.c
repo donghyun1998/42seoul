@@ -1,26 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.h                                        :+:      :+:    :+:   */
+/*   func.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: donghyk2 <donghyk2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/02 16:23:59 by donghyk2          #+#    #+#             */
-/*   Updated: 2022/11/21 20:52:50 by donghyk2         ###   ########.fr       */
+/*   Created: 2022/11/21 17:24:03 by donghyk2          #+#    #+#             */
+/*   Updated: 2022/11/21 20:55:43 by donghyk2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PRINTF_H
-# define FT_PRINTF_H
+#include "ft_printf.h"
 
-# include <stdarg.h>
-# include <unistd.h>
+static int	print(long long n, int cnt)
+{
+	char	left;
 
-int	ft_printf(const char *s, ...);
-int	print_ret_cnt(va_list ap, const char *s);
-int	is_form(const char *s);
-int print_va_arg(va_list ap, const char form);
-static int	print(long long n, int cnt);
-int	ft_putnbr_ret_cnt(long long n, int cnt);
+	if (n > 9)
+		cnt = print(n / 10, cnt);
+	left = n % 10 + '0';
+	write(1, &left, 1);
+	cnt++;
+	return (cnt);
+}
 
-#endif
+int	ft_putnbr_ret_cnt(long long n, int cnt)
+{
+	if (n < 0)
+	{
+		n *= -1;
+		write(1, "-", 1);
+		cnt++;
+		return (print(n, cnt));
+	}
+	else
+		return (print(n, cnt));
+}
