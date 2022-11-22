@@ -6,7 +6,7 @@
 /*   By: donghyk2 <donghyk2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 17:24:03 by donghyk2          #+#    #+#             */
-/*   Updated: 2022/11/22 16:33:58 by donghyk2         ###   ########.fr       */
+/*   Updated: 2022/11/22 17:32:13 by donghyk2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,14 @@
 int	print(long long n, int cnt)
 {
 	char	left;
+	int		ret;
 
+	ret = cnt;
 	if (n > 9)
-		print(n / 10, cnt);
+		ret = print(n / 10, cnt);
 	left = n % 10 + '0';
-	cnt += write(1, &left, 1);
-	return (cnt);
+	ret += write(1, &left, 1);
+	return (ret);
 }
 
 int	ft_putnbr_ret_cnt(long long n, int cnt)
@@ -29,24 +31,24 @@ int	ft_putnbr_ret_cnt(long long n, int cnt)
 	{
 		n *= -1;
 		cnt += write(1, "-", 1);
-		return (print(n, cnt));
 	}
-	else
-		return (print(n, cnt));
+	return (print(n, cnt));
 }
 
 int	print_hex(long long n, int cnt, const char *hexarr)
 {
+	int	ret;
+
+	ret = cnt;
 	if (n < 0)
 	{
 		n *= -1;
-		write (1, "-", 1);
-		cnt++;
+		cnt += write(1, "-", 1);
 	}
 	if (n > 15)
-		print_hex(n / 16, cnt, hexarr);
-	cnt += write(1, &hexarr[n % 16], 1);
-	return (cnt);
+		ret = print_hex(n / 16, cnt, hexarr);
+	ret += write(1, &hexarr[n % 16], 1);
+	return (ret);
 }
 
 int	ft_print_hex_ret_cnt(long long n, int x)

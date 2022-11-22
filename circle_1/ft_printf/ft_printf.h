@@ -6,7 +6,7 @@
 /*   By: donghyk2 <donghyk2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 16:23:59 by donghyk2          #+#    #+#             */
-/*   Updated: 2022/11/22 16:24:51 by donghyk2         ###   ########.fr       */
+/*   Updated: 2022/11/22 17:14:37 by donghyk2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int		ft_print_ptr_ret_cnt(unsigned long long p);
 int		form_c(int c);
 int		form_s(char *s);
 int		form_p(unsigned long long p);
-int		form_diu(int c);
+int		form_diu(long long c, int u_flag);
 int		form_x(long long c, int x);
 size_t	ft_strlen(const char *s);
 

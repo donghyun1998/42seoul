@@ -6,7 +6,7 @@
 /*   By: donghyk2 <donghyk2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 13:37:13 by donghyk2          #+#    #+#             */
-/*   Updated: 2022/11/22 16:42:00 by donghyk2         ###   ########.fr       */
+/*   Updated: 2022/11/22 17:13:27 by donghyk2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ int	print_va_arg(va_list *ap, const char form)
 	else if (form == 'p')
 		return (form_p(va_arg(*ap, long long)));
 	else if (form == 'd' || form == 'i')
-		return (form_diu(va_arg(*ap, int)));
+		return (form_diu(va_arg(*ap, long long), 0));
 	else if (form == 'u')
-		return (form_diu(va_arg(*ap, unsigned int)));
+		return (form_diu(va_arg(*ap, unsigned int), 1));
 	else if (form == 'x')
 		return (form_x(va_arg(*ap, unsigned int), 1));
 	else if (form == 'X')
