@@ -3,8 +3,5 @@
 
 int	main()
 {
-	int tmp;
-
-	tmp = ft_putnbr_ret_cnt(-3333,0);
-	printf ("\n%d", tmp);
+	printf("return: %d", ft_printf("%d\n", -10));
 }
