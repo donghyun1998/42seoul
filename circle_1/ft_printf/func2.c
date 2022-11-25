@@ -6,7 +6,7 @@
 /*   By: donghyk2 <donghyk2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 15:54:42 by donghyk2          #+#    #+#             */
-/*   Updated: 2022/11/22 17:32:30 by donghyk2         ###   ########.fr       */
+/*   Updated: 2022/11/25 16:20:28 by donghyk2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,13 @@
 
 int	print_ptr(unsigned long long n, int cnt, const char *hexarr)
 {
-	int	ret;
-
-	ret = cnt;
 	if (n > 15)
-		ret = print_ptr(n / 16, cnt, hexarr);
+		cnt = print_ptr(n / 16, cnt, hexarr);
 	if (n)
-		ret += write(1, &hexarr[n % 16], 1);
+		cnt += write(1, &hexarr[n % 16], 1);
 	else
-		ret -= 1;
-	return (ret);
+		cnt -= 1;
+	return (cnt);
 }
 
 int	ft_print_ptr_ret_cnt(unsigned long long p)

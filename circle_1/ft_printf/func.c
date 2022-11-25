@@ -6,7 +6,7 @@
 /*   By: donghyk2 <donghyk2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 17:24:03 by donghyk2          #+#    #+#             */
-/*   Updated: 2022/11/22 17:32:13 by donghyk2         ###   ########.fr       */
+/*   Updated: 2022/11/25 16:21:15 by donghyk2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,12 @@
 int	print(long long n, int cnt)
 {
 	char	left;
-	int		ret;
 
-	ret = cnt;
 	if (n > 9)
-		ret = print(n / 10, cnt);
+		cnt = print(n / 10, cnt);
 	left = n % 10 + '0';
-	ret += write(1, &left, 1);
-	return (ret);
+	cnt += write(1, &left, 1);
+	return (cnt);
 }
 
 int	ft_putnbr_ret_cnt(long long n, int cnt)
@@ -37,18 +35,15 @@ int	ft_putnbr_ret_cnt(long long n, int cnt)
 
 int	print_hex(long long n, int cnt, const char *hexarr)
 {
-	int	ret;
-
-	ret = cnt;
 	if (n < 0)
 	{
 		n *= -1;
 		cnt += write(1, "-", 1);
 	}
 	if (n > 15)
-		ret = print_hex(n / 16, cnt, hexarr);
-	ret += write(1, &hexarr[n % 16], 1);
-	return (ret);
+		cnt = print_hex(n / 16, cnt, hexarr);
+	cnt += write(1, &hexarr[n % 16], 1);
+	return (cnt);
 }
 
 int	ft_print_hex_ret_cnt(long long n, int x)
