@@ -6,7 +6,7 @@
 /*   By: donghyk2 <donghyk2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 15:27:43 by donghyk2          #+#    #+#             */
-/*   Updated: 2022/12/19 21:00:28 by donghyk2         ###   ########.fr       */
+/*   Updated: 2022/12/20 19:06:43 by donghyk2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ size_t	ft_strlen(const char *s)
 {
 	size_t	len;
 
+	if (!s)
+		return (0);
 	len = 0;
 	while (s[len])
 		len++;
@@ -30,7 +32,7 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 	i = 0;
 	len = 0;
 	while (src[len])
-		len ++;
+		len++;
 	if (dstsize == 0)
 		return (len);
 	while (src[i] && i < dstsize - 1)
@@ -59,7 +61,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	size_t	reslen;
 	size_t	i;
 
-	if (!s1 || !s2)
+	if (!s1 && !s2)
 		return (0);
 	reslen = ft_strlen(s1) + ft_strlen(s2) + 1;
 	res = (char *)malloc(sizeof(char) * reslen);
@@ -82,9 +84,9 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	char	*res;
 	size_t	slen;
 
-	slen = ft_strlen(s);
 	if (!s)
 		return (0);
+	slen = ft_strlen(s);
 	if (slen < start)
 		return (ft_strdup(""));
 	if (slen < start + len)
