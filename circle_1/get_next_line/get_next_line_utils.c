@@ -6,7 +6,7 @@
 /*   By: donghyk2 <donghyk2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 15:27:43 by donghyk2          #+#    #+#             */
-/*   Updated: 2022/12/20 19:06:43 by donghyk2         ###   ########.fr       */
+/*   Updated: 2022/12/21 16:11:19 by donghyk2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@ size_t	ft_strlen(const char *s)
 {
 	size_t	len;
 
-	if (!s)
-		return (0);
 	len = 0;
 	while (s[len])
 		len++;

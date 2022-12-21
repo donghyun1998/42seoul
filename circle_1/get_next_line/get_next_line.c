@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: donghyk2 <donghyk2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/19 15:27:47 by donghyk2          #+#    #+#             */
-/*   Updated: 2022/12/20 21:35:40 by donghyk2         ###   ########.fr       */
+/*   Created: 2022/12/21 16:59:22 by donghyk2          #+#    #+#             */
+/*   Updated: 2022/12/21 22:43:47 by donghyk2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,57 +34,59 @@ int	find_new_line_index(char *buffer)
 	return (-1);
 }
 
-// char	*add_line(char *buffer, int fd, int *readsize)
-// {
-// 	char	*res;
-// 	char	*newbuffer;
-
-// 	newbuffer = (char *)malloc(sizeof(char) * BUFFER_SIZE + 1);
-// 	*readsize = read(fd, newbuffer, BUFFER_SIZE);
-// 	if (*readsize == 0)
-// 	{
-// 		allfree(newbuffer);
-// 		return (buffer);
-// 	}
-// 	newbuffer[*readsize] = '\0';
-// 	res = ft_strjoin(buffer, newbuffer);
-// 	allfree(buffer);
-// 	allfree(newbuffer);
-// 	return (res);
-// }
-
-int	add_line(char **buffer, int fd, int *readsize)
+int	ret_read_add_buffer(int fd, char *buffer)
 {
-	char	*res;
 	char	*newbuffer;
+	char	*resbuffer;
+	int		readsize;
 
 	newbuffer = (char *)malloc(sizeof(char) * BUFFER_SIZE + 1);
-	*readsize = read(fd, newbuffer, BUFFER_SIZE);
-	if (*readsize == 0)
+	if (!newbuffer)
+		return (0);
+	readsize = read(fd, newbuffer, BUFFER_SIZE);
+	if (readsize == 0)
 	{
 		allfree(newbuffer);
-		allfree(*buffer);
-		*buffer = NULL;
 		return (0);
 	}
-	newbuffer[*readsize] = '\0';
-	res = ft_strjoin(*buffer, newbuffer);
-	allfree(*buffer);
+	newbuffer[readsize] = '\0';
+	resbuffer = ft_strjoin(buffer, newbuffer);
 	allfree(newbuffer);
-	*buffer = res;
-	return (1);
+	allfree(buffer);
+	buffer = resbuffer;
+	return (readsize);
+}
+
+char	*ret_line(int fd, char *backup)
+{
+	char	*fullstr;
+	char	*buffer;
+	char	*line;
+	int		readsize;
+	int		linelen;
+
+	buffer = ft_strdup("");
+	readsize = ret_read_add_buffer(fd, buffer);
+	while (readsize && find_new_line_index(buffer) == -1)
+		readsize = ret_read_add_buffer(fd, buffer);
+	fullstr = ft_strjoin(backup, buffer);
+	allfree(backup);
+	allfree(buffer);
+	linelen = find_new_line_index(fullstr) + 1;
+	backup = ft_substr(fullstr, linelen, ft_strlen(fullstr) - linelen);
+	line = ft_substr(fullstr, 0, linelen);
+	allfree(fullstr);
+	return (line);
 }
 
 #include <stdio.h>
 char	*get_next_line(int fd)
 {
 	static char	*backup;
-	char		*buffer;
 	char		*line;
+	char		*tmp;
 	int			linelen;
-	int			readsize;
 
-	readsize = 1;
 	if (fd < 0 || read(fd, 0, 0) < 0 || BUFFER_SIZE <= 0)
 	{
 		if (backup)
@@ -93,36 +95,12 @@ char	*get_next_line(int fd)
 	}
 	if (!backup)
 		backup = ft_strdup("");
-	buffer = ft_strdup(backup);
+	if (find_new_line_index(backup) == -1)
+		return (ret_line(fd, backup));
+	linelen = find_new_line_index(backup) + 1;
+	tmp = ft_substr(backup, linelen, ft_strlen(backup) - linelen);
+	line = ft_substr(backup, 0, linelen);
 	allfree(backup);
-	// while (find_new_line_index(buffer) == -1 && readsize) // 백업에 개행 없으면
-	// 	buffer = add_line(buffer, fd, &readsize);
-	while (add_line(&buffer, fd, &readsize) && find_new_line_index(buffer) == -1)
-		;
-	if (readsize)
-		linelen = find_new_line_index(buffer) + 1;
-	else
-		linelen = ft_strlen(buffer);
-	line = ft_substr(buffer, 0, linelen);
-	backup = ft_substr(buffer, linelen, ft_strlen(buffer) - linelen);
-	allfree(buffer);
+	backup = tmp;
 	return (line);
 }
-
-//경우의 수 다 적어보기
-// #include <stdio.h>
-// #include <fcntl.h>
-// int main()
-// {
-// 	int fd;
-// 	char *s;
-
-// 	fd = open("ex.txt", O_RDONLY);
-// 	s = get_next_line(fd);
-// 	while (*s)
-// 	{
-// 		printf("%s", s);
-// 		s = get_next_line(fd);
-// 	}
-// 	close(fd);
-// }
