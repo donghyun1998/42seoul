@@ -6,7 +6,7 @@
 /*   By: donghyk2 <donghyk2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 15:27:50 by donghyk2          #+#    #+#             */
-/*   Updated: 2022/12/21 22:43:57 by donghyk2         ###   ########.fr       */
+/*   Updated: 2022/12/21 23:17:14 by donghyk2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ char	*ft_strdup(const char *s1);
 char	*ft_strjoin(char const *s1, char const *s2);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 int		find_new_line_index(char *buffer);
-int		ret_read_add_buffer(int fd, char *buffer);
-char	*ret_line(int fd, char *backup);
+int		ret_read_add_buffer(int fd, char **buffer);
+char	*ret_line(int fd, char **backup);
 char	*get_next_line(int fd);
 
 #endif
