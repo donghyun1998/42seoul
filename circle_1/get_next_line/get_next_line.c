@@ -6,7 +6,7 @@
 /*   By: donghyk2 <donghyk2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/26 13:58:34 by donghyk2          #+#    #+#             */
-/*   Updated: 2022/12/26 19:58:12 by donghyk2         ###   ########.fr       */
+/*   Updated: 2022/12/26 20:51:59 by donghyk2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ char	*make_buf(int fd, int *eof_flag, char **backup)
 	{
 		allfree(&buffer);
 		allfree(backup);
+		*eof_flag = -1;
 		return (0);
 	}
 	readsize = read(fd, buffer, BUFFER_SIZE);
