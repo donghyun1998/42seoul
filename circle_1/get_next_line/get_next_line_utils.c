@@ -6,7 +6,7 @@
 /*   By: donghyk2 <donghyk2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 15:27:43 by donghyk2          #+#    #+#             */
-/*   Updated: 2022/12/21 16:11:19 by donghyk2         ###   ########.fr       */
+/*   Updated: 2022/12/26 19:41:49 by donghyk2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,8 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	size_t	reslen;
 	size_t	i;
 
-	if (!s1 && !s2)
-		return (0);
+	if (!s2)
+		return (ft_strdup(s1));
 	reslen = ft_strlen(s1) + ft_strlen(s2) + 1;
 	res = (char *)malloc(sizeof(char) * reslen);
 	if (!res)

@@ -5,17 +5,17 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: donghyk2 <donghyk2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/19 15:27:47 by donghyk2          #+#    #+#             */
-/*   Updated: 2022/12/22 00:21:17 by donghyk2         ###   ########.fr       */
+/*   Created: 2022/12/26 13:58:34 by donghyk2          #+#    #+#             */
+/*   Updated: 2022/12/26 19:58:12 by donghyk2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-void	allfree(char *str)
+void	allfree(char **str)
 {
-	free(str);
-	str = 0;
+	free(*str);
+	*str = 0;
 }
 
 int	find_new_line_index(char *buffer)
@@ -34,106 +34,83 @@ int	find_new_line_index(char *buffer)
 	return (-1);
 }
 
-// char	*add_line(char *buffer, int fd, int *readsize)
-// {
-// 	char	*res;
-// 	char	*newbuffer;
-
-// 	newbuffer = (char *)malloc(sizeof(char) * BUFFER_SIZE + 1);
-// 	*readsize = read(fd, newbuffer, BUFFER_SIZE);
-// 	if (*readsize == 0)
-// 	{
-// 		allfree(newbuffer);
-// 		return (buffer);
-// 	}
-// 	newbuffer[*readsize] = '\0';
-// 	res = ft_strjoin(buffer, newbuffer);
-// 	allfree(buffer);
-// 	allfree(newbuffer);
-// 	return (res);
-// }
-
-int	add_line(char **buffer, int fd, int *readsize)
+char	*make_buf(int fd, int *eof_flag, char **backup)
 {
-	char	*res;
-	char	*newbuffer;
+	char	*buffer;
+	int		readsize;
 
-	newbuffer = (char *)malloc(sizeof(char) * BUFFER_SIZE + 1);
-	*readsize = read(fd, newbuffer, BUFFER_SIZE);
-	if (*readsize == 0)
+	buffer = (char *)malloc(sizeof(char) * BUFFER_SIZE + 1);
+	if (!buffer)
 	{
-		allfree(newbuffer);
-		allfree(*buffer);
-		*buffer = NULL;
+		allfree(&buffer);
+		allfree(backup);
 		return (0);
 	}
-	newbuffer[*readsize] = '\0';
-	res = ft_strjoin(*buffer, newbuffer);
-	allfree(*buffer);
-	allfree(newbuffer);
-	*buffer = res;
-	return (1);
+	readsize = read(fd, buffer, BUFFER_SIZE);
+	if (readsize == 0)
+	{
+		allfree(&buffer);
+		*eof_flag = 1;
+		return (0);
+	}
+	buffer[readsize] = '\0';
+	if (readsize < BUFFER_SIZE)
+		*eof_flag = 1;
+	else
+		*eof_flag = 0;
+	return (buffer);
 }
 
-char	*eof(char **buffer)
+char	*make_line(char **backup)
 {
+	int		nl_idx;
 	char	*line;
+	char	*tmp;
 
-	if (ft_strlen(*buffer))
-		line = ft_strdup(*buffer);
-	else
-		line = NULL;
-	allfree(*buffer);
+	if (ft_strlen(*backup) == 0)
+	{
+		allfree(backup);
+		return (0);
+	}
+	nl_idx = find_new_line_index(*backup);
+	if (nl_idx == -1)
+	{
+		line = ft_strdup(*backup);
+		allfree(backup);
+		return (line);
+	}
+	line = ft_substr(*backup, 0, nl_idx + 1);
+	tmp = ft_substr(*backup, nl_idx + 1, ft_strlen(*backup) - nl_idx - 1);
+	allfree(backup);
+	*backup = tmp;
 	return (line);
 }
 
-#include <stdio.h>
 char	*get_next_line(int fd)
 {
 	static char	*backup;
 	char		*buffer;
-	char		*line;
-	int			linelen;
-	int			readsize;
+	char		*tmp;
+	int			eof_flag;
 
-	readsize = 1;
 	if (fd < 0 || read(fd, 0, 0) < 0 || BUFFER_SIZE <= 0)
 	{
 		if (backup)
-			allfree(backup);
+			allfree(&backup);
 		return (0);
 	}
 	if (!backup)
 		backup = ft_strdup("");
-	buffer = ft_strdup(backup);
-	allfree(backup);
-	while (add_line(&buffer, fd, &readsize) && find_new_line_index(buffer) == -1)
-		if (readsize == 0)
+	while (find_new_line_index(backup) == -1)
+	{
+		buffer = make_buf(fd, &eof_flag, &backup);
+		tmp = ft_strjoin(backup, buffer);
+		allfree(&backup);
+		if (buffer)
+			allfree(&buffer);
+		backup = tmp;
+		if (eof_flag)
 			break ;
-	if (readsize)
-		linelen = find_new_line_index(buffer) + 1;
-	else
-		return (eof(&buffer));
-	line = ft_substr(buffer, 0, linelen);
-	backup = ft_substr(buffer, linelen, ft_strlen(buffer) - linelen);
-	allfree(buffer);
-	return (line);
+	}
+	return (make_line(&backup));
 }
-
-//경우의 수 다 적어보기
-// #include <stdio.h>
-// #include <fcntl.h>
-// int main()
-// {
-// 	int fd;
-// 	char *s;
-
-// 	fd = open("ex.txt", O_RDONLY);
-// 	s = get_next_line(fd);
-// 	while (*s)
-// 	{
-// 		printf("%s", s);
-// 		s = get_next_line(fd);
-// 	}
-// 	close(fd);
-// }
