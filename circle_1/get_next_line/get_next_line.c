@@ -6,7 +6,7 @@
 /*   By: donghyk2 <donghyk2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/26 13:58:34 by donghyk2          #+#    #+#             */
-/*   Updated: 2022/12/27 17:41:56 by donghyk2         ###   ########.fr       */
+/*   Updated: 2023/01/02 19:06:17 by donghyk2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	allfree(char **str)
 {
 	free(*str);
+	*str = 0;
 }
 
 int	find_new_line_index(char *buffer)
